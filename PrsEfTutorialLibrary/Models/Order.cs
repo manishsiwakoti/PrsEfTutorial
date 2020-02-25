@@ -16,7 +16,7 @@ namespace PrsEfTutorialLibrary.Models
         public virtual Customer Customer { get; set; }
 
         public override string ToString() => $"{Id}/{Description}/{Amount}/{Customer.Name}";
-
+        public virtual List<Orderline> Orderlines { get; set; }
         public Order() { }
         }
     }

@@ -10,12 +10,14 @@ namespace PrsEfTutorial
         static void Main(string[] args)
             {
             var context = new AppDbContext();
-            AddOrders(context);
+            UpdateCustomerSales(context);
+            //AddOrders(context);
             //GetCustomerByPk(context);
             //UpdateCustomer(context);
             //DeleteCustomer(context);
             //GetAllCustomers(context);
             //AddCustomer(context);
+
             static void AddCustomer(AppDbContext context)
                 {
                 var cust = new Customer
@@ -42,7 +44,7 @@ namespace PrsEfTutorial
             }
         static void DeleteCustomer(AppDbContext context)
             {
-            var keyToDelete = 1;
+            var keyToDelete = 9;
             var cust = context.Customers.Find(keyToDelete);
             if (cust == null) throw new Exception("Customer not found");
             context.Customers.Remove(cust);
@@ -51,10 +53,10 @@ namespace PrsEfTutorial
             }
         static void UpdateCustomer(AppDbContext context)
             {
-            var custPk = 5;
+            var custPk = 8;
             var cust = context.Customers.Find(custPk);
             if (cust == null) throw new Exception("Customer not found");
-            cust.Name = "Amazon Inc.";
+            cust.Name = "Mejeir.";
             var rowsAffected = context.SaveChanges();
             if (rowsAffected != 1) throw new Exception("Failed to update customer");
             Console.WriteLine("Update Successful!");
@@ -65,6 +67,23 @@ namespace PrsEfTutorial
             var cust = context.Customers.Find(custPk);
             if (cust == null) throw new Exception("Customer not found");
             Console.WriteLine(cust);
+            }
+        static void UpdateCustomerSales(AppDbContext context)
+            {
+            var CustOrderJoin = from c in context.Customers
+                                join o in context.Orders
+                                on c.Id equals o.CustomerId
+                                where c.Id == 3
+                                select new
+                                    {
+                                    Amount = o.Amount,
+                                    Customer = c.Name,
+                                    Order = o.Description
+                                    };
+            var orderTotal = CustOrderJoin.Sum(c => c.Amount);
+            var cust = context.Customers.Find(3);
+            cust.Sales = orderTotal;
+            context.SaveChanges();
             }
         static void AddOrders(AppDbContext context)
             {
