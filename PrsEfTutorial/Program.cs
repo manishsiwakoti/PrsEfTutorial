@@ -10,29 +10,8 @@ namespace PrsEfTutorial
         static void Main(string[] args)
             {
             var context = new AppDbContext();
-            UpdateCustomerSales(context);
-            //AddOrders(context);
-            //GetCustomerByPk(context);
-            //UpdateCustomer(context);
-            //DeleteCustomer(context);
-            //GetAllCustomers(context);
-            //AddCustomer(context);
-
-            static void AddCustomer(AppDbContext context)
-                {
-                var cust = new Customer
-                    {
-                    Id = 0,
-                    Name = "Target",
-                    Sales = 0,
-                    Active = true
-                    };
-                context.Customers.Add(cust);
-                var rowsAffected = context.SaveChanges();
-                if (rowsAffected == 0) throw new Exception("Add failed!");
-                return;
-
-                }
+            //UpdateCustomerSales(context);
+            AddOrders(context);
             }
         static void GetAllCustomers(AppDbContext context)
             {
@@ -87,8 +66,8 @@ namespace PrsEfTutorial
             }
         static void AddOrders(AppDbContext context)
             {
-            var order1 = new Order { Id = 0, Description = "Order 1", Amount = 200, CustomerId = 100 };
-            var order2 = new Order { Id = 0, Description = "Order 2", Amount = 400, CustomerId = 2 };
+            var order1 = new Order { Id = 0, Description = "Order 1", Amount = 200, CustomerId = 3 };
+            var order2 = new Order { Id = 0, Description = "Order 2", Amount = 400, CustomerId = 3 };
             var order3 = new Order { Id = 0, Description = "Order 3", Amount = 600, CustomerId = 3 };
             var order4 = new Order { Id = 0, Description = "Order 4", Amount = 800, CustomerId = 3 };
             var order5 = new Order { Id = 0, Description = "Order 5", Amount = 1000, CustomerId = 3 };
@@ -98,5 +77,7 @@ namespace PrsEfTutorial
             if (rowsAffected != 5) throw new Exception("Five orders did not add");
             Console.WriteLine("Added 5 orders");
             }
+
         }
     }
+    
